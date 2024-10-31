@@ -17,40 +17,33 @@ public class MathService {
         
     }
     
-    public boolean linealSearch(int[] list, int value){
-        boolean flag = false;
+    public int linealSearch(int[] list, int value){
         if(list.length > 0){
             for(int i=0; i < list.length; i++){
                 if(list[i]==value){
-                    flag = true;
+                    return i;
                 }
             }
         }
-        else{
-            System.out.println("No hay lista");
-            flag = false;
-        }
-        return flag;
+        return -1;
     }
     
-    public boolean binarySearch(int[] list, int value){
+    public int binarySearch(int[] list, int value){
         int left = 0;
         int right = list.length - 1;
-        boolean flag = false;
         
         while(left <= right){
             int mid = left + (right-left);
             
             if(list[mid] == value){
-                flag = true;
-                return flag;
+                return mid;
             }else if(list[mid] < value){
                 left = mid + 1;
             }else{
                 right = mid -1;
             }
         }
-        return flag;
+        return -1;
     }
     
 }
