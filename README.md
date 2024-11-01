@@ -27,3 +27,39 @@ Se intenta realizar un intento de despliegue en una instancia de EC2 en AWS, sin
 
 Intento de prueba:
 ![image](https://github.com/user-attachments/assets/f823ee26-9e47-4029-8049-874450a788fa)
+
+----------------------------------------------------------------------------------------
+Trabajo realizado en casa
+Se logra corregir los errores de la conexion proxy junto con los modelos de la busqueda lineal y binaria, por lo que se realiza el despliegue en AWS.
+Se crean 3 instancias, una para el servidor Proxy, y las 2 restantes para las busquedas respectivamente.
+
+ [DEPLOYMENT VIDEO](https://youtu.be/gA29rbIQc8M)
+
+![image](https://github.com/user-attachments/assets/396ac29a-2c8a-4063-ac87-cc9110e7558c)
+
+ ![image](https://github.com/user-attachments/assets/e1b90038-a3eb-4904-8cca-f9faf6c7b9dc)
+
+ ![image](https://github.com/user-attachments/assets/9675c602-b5ef-4312-ac7f-6b1920bd122e)
+
+![image](https://github.com/user-attachments/assets/48481702-b433-4ed6-a025-efac2415ffdb)
+
+![image](https://github.com/user-attachments/assets/d60b582e-a08f-40fb-a260-184287ae6215)
+
+![Recording 2024-11-01 090213](https://github.com/user-attachments/assets/b0f591c0-67ab-483b-8517-614f0f52ca54)
+
+
+Deployment Instructions
+
+```bash
+git clone https://github.com/CamiloMurcia28/AREP-PARCIAL2
+cd AREP-LAB06
+mvn clean install
+```
+
+AWS Deployment Instuctions
+
+1. Creamos 3 instancias EC2, 1 para el proxy y 2 para el mathserver, todas en el mismo grupo de seguridad y con la misma llave
+2. Pasamos los archivos .jar respectivamente segun corrsponda
+3. ejecutamos el siguinete comando: 'sudo java -jar nombrearchivo.jar --server.port=9000'
+4. ingresamos con el DNS publico de la maquina proxy
+
