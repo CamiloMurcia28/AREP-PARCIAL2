@@ -7,12 +7,12 @@
     </head>
     <body>
         <h1>Binary Search</h1>
-        <form action="/hello">
-            <label for="list">List: </label><br>
-            <input type="text" id="list" name="list"><br><br>
+        <form action="/proxy/binarySearch">
+            <label for="binaryList">List: </label><br>
+            <input type="text" id="binaryList" name="list"><br><br>
             
-            <label for="value">Value: </label><br>
-            <input type="text" id="value" name="value"><br><br>
+            <label for="binaryValue">Value: </label><br>
+            <input type="text" id="binaryValue" name="value"><br><br>
             
             <input type="button" value="Submit" onclick="loadGetMsg()">
         </form> 
@@ -20,40 +20,61 @@
 
         <script>
             function loadGetMsg() {
-                let list = document.getElementById("list").value.split(",");
-                let value = document.getElementById("value").value;
+                let list = document.getElementById("binaryList").value;
+                let value = document.getElementById("binaryValue").value;
 
-                const xhttp = new XMLHttpRequest();
-                xhttp.onload = function() {
-                    document.getElementById("getrespmsg").innerHTML =
-                    this.responseText;
-                }
-                    xhttp.open("GET", "/binarySearch?list="+list + "&value" + value);
-                xhttp.send();
+                let url = "/proxy/binarySearch";
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    list: list,
+                    value: value
+                })
+            })
+            .then(response => response.text())
+            .then(data => document.getElementById("getrespmsg").innerHTML = data)
+            .catch(error => console.error('Error:', error));
             }
         </script>
 
         <h1>Linear Search</h1>
-        <form action="/hellopost">
-            <label for="list">List: </label><br>
-            <input type="text" id="list" name="list"><br><br>
+        <form action="/proxy/linearSearch">
+            <label for="linearList">List: </label><br>
+            <input type="text" id="linearList" name="list"><br><br>
             
-            <label for="value">Value: </label><br>
-            <input type="text" id="value" name="value"><br><br>
+            <label for="linearValue">Value: </label><br>
+            <input type="text" id="linearValue" name="value"><br><br>
             
-            <input type="button" value="Submit" onclick="loadPostMsg(postname)">
+            <input type="button" value="Submit" onclick="loadPostMsg()">
         </form>
         
         <div id="postrespmsg"></div>
         
         <script>
-            function loadPostMsg(name){
-                let url = "/linearSearch?list=" + list.value + "&value" + value;
-
-                fetch (url, {method: 'GET'})
-                    .then(x => x.text())
-                    .then(y => document.getElementById("postrespmsg").innerHTML = y);
-            }
+            function loadPostMsg(){
+            let list = document.getElementById("linearList").value;
+            let value = document.getElementById("linearValue").value;
+            
+            let url = "/proxy/linearSearch";
+            
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    list: list,
+                    value: value
+                })
+            })
+            .then(response => response.text())
+            .then(data => document.getElementById("postrespmsg").innerHTML = data)
+            .catch(error => console.error('Error:', error));
+        }
         </script>
     </body>
 </html>

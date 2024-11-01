@@ -1,31 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package eci.edu.co.camilomurciaparcial;
 
-import java.util.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-/**
- *
- * @author camilo.murcia-e
- */
+import java.util.Collections;
 
 @SpringBootApplication
 public class CamiloMurciaParcial {
-
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(CamiloMurciaParcial.class);
+        
+        // Configurar el puerto
         app.setDefaultProperties(Collections.singletonMap("server.port", getPort()));
+        
         app.run(args);
     }
+    
     private static int getPort() {
-        if (System.getenv("PORT") != null) {
-            return Integer.parseInt(System.getenv("PORT"));
+        String port = System.getenv("PORT");
+        if (port != null) {
+            return Integer.parseInt(port);
         }
-        return 33025;
+        return 8080; // Puerto por defecto
     }
-
 }

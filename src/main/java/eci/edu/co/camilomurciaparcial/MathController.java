@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package eci.edu.co.camilomurciaparcial;
+import java.util.*;
+import static java.util.Collections.list;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,23 +25,46 @@ public class MathController {
     @Autowired
     private MathService mathService;
     
-    @GetMapping("/linearSearch")
-    public ResponseEntity<?> linearSearch(@RequestParam String list, @RequestParam int value){
-        String[] listt = list.split(",");
-        int[] valueList = new int[listt.length];
-        for(int i=0;i<list.length();i++){
-            valueList[i] = Integer.parseInt(listt[i]);
+    @PostMapping("/linearSearch")
+    public ResponseEntity<?> linearSearch(@RequestParam("list") String listStr, @RequestParam("value") int value) {
+        try {
+            int[] list = parseList(listStr);
+            int result = mathService.linealSearch(list, value);
+            Map<String, Object> response = new HashMap<>();
+            response.put("operation", "linearSearch");
+            response.put("inputList", Arrays.toString(list));
+            response.put("value", value);
+            response.put("output", result);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity( mathService.linealSearch(valueList, value), HttpStatus.OK);
     }
     
-   @GetMapping("/binarySearch")
-    public ResponseEntity<?> binarySearch(@RequestParam String[] list, @RequestParam String value){
-        int[] valueList = new int[list.length];
-        for(int i=0;i<list.length;i++){
-            valueList[i] = Integer.parseInt(list[i]);
+   @PostMapping("/binarySearch")
+    public ResponseEntity<?> binarySearch(@RequestParam("list") String listStr, @RequestParam("value") int value) {
+        try {
+            int[] list = parseList(listStr);
+            int result = mathService.binarySearch(list, value);
+            Map<String, Object> response = new HashMap<>();
+            response.put("operation", "binarySearch");
+            response.put("inputList", Arrays.toString(list));
+            response.put("value", value);
+            response.put("output", result);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("error", e.getMessage());
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
         }
-        int valor = Integer.parseInt(value);
-        return new ResponseEntity( mathService.binarySearch(valueList, valor), HttpStatus.OK);
-    } 
+    }
+    
+    private int[] parseList(String listStr) {
+        return Arrays.stream(listStr.split(","))
+                    .map(String::trim)
+                    .mapToInt(Integer::parseInt)
+                    .toArray();
+    }
 }
